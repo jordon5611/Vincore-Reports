@@ -1,15 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 
-// const corsOptions = {
-//   origin: ["https://uhcstock.com", "http://192.168.100.5:3000", "https://admin.uhcstock.com", "http://localhost:3000", "http://localhost:3001"],
-//   optionsSuccessStatus: 200,
-// };
+const corsOptions = {
+  origin: ["https://vin-core.vercel.app/", "http://localhost:3000", "http://localhost:3001"],
+  optionsSuccessStatus: 200,
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // app.options('*', cors(corsOptions));
 
