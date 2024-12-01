@@ -34,6 +34,7 @@ UpdateSubscription.get('/customers/:customer_id',Authentication, async (req, res
     })
 
     res.redirect(303, session.url);
+    res.status(200).json({status:'success', url: session.url});
 
 })
 
