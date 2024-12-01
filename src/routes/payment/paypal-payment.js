@@ -63,7 +63,7 @@ router.get('/paypal/success', async (req, res) => { // Success
             console.error(error.response);
             res.status(500).send('Payment execution failed');
         } else {
-            console.log('Payment executed successfully: ', payment);
+            //console.log('Payment executed successfully: ', payment);
 
             const order = await Order.findById(orderId);
 

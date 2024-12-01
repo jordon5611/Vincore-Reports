@@ -7,7 +7,7 @@ const User = require('../../models/User');
 
 const { NotFoundError, BadRequestError } = require("../../../errors")
 
-UpdateSubscription.get('/customers/:customer_id',Authentication, async (req, res) => {
+UpdateSubscription.get('/customers',Authentication, async (req, res) => {
 
     //Check User
 
@@ -32,8 +32,7 @@ UpdateSubscription.get('/customers/:customer_id',Authentication, async (req, res
         customer: customerId,
         return_url: `${process.env.BASE_URL}/`,
     })
-
-    res.redirect(303, session.url);
+    
     res.status(200).json({status:'success', url: session.url});
 
 })
