@@ -81,7 +81,7 @@ const setNewPassword = async (req, res)=>{
 
     const data = {...user.toObject(),token}
 
-    res.send({status:'success', data})
+    res.send({status:'success', data, message:'Password Changed Successfully'})
 
 }
 

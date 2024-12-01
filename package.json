@@ -23,6 +23,7 @@
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7",
     "paypal-rest-sdk": "^1.8.1",
-    "stripe": "^17.4.0"
+    "stripe": "^17.4.0",
+    "vin-validator": "^1.0.0"
   }
 }

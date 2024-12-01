@@ -23,7 +23,7 @@ const updateInformation = async(req,res)=>{
 
     await user.save()
 
-    res.send({status:'success', user})
+    res.send({status:'success', user, message:'Information Updated Successfully'})
 }
 
 

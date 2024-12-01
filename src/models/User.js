@@ -25,16 +25,40 @@ const UserSchema = new mongoose.Schema(
     code: {
       type: Number,
     },
-    role:{
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user'
     },
     subscription: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false
+    },
+    subscriptionStartDate: {
+      type: Date
+    },
+    subscriptionEndDate: {  
+      type: Date
     },
     stripeCustomerId: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    postalCode: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    phoneNumber: {
       type: String,
     },
   },

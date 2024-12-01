@@ -13,7 +13,11 @@ const app = express();
 
 // app.options('*', cors(corsOptions));
 
-app.use(bodyParser.json({ limit: '25mb' }));
+// app.use(bodyParser.json({ limit: '25mb' }));
+
+// Place webhook route before JSON middleware
+const {StripeWebhook} = require('./routes/payment/stripe-payment-update');
+app.use( StripeWebhook);
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,13 +31,13 @@ app.use(express.json());
 // const TransactionRoutes = require('./Routes/transaction')
 // const AdminRoutes = require('./Routes/admin')
 // const TeamRoutes = require('./Routes/teams')
-// const QuantizationRoutes = require('./Routes/quantization')
+const OrderRoutes = require('./routes/order/index')
 const PayPalRoutes = require('./routes/payment/paypal-payment')
 const CreateSubscriptionSession = require('./routes/payment/subscription-payment')
 const CreateReportSession = require('./routes/payment/report-payment')
 
 const SessionStatus = require('./routes/payment/payment-success-cancel')
-const UpdateSubscription = require('./routes/payment/stripe-payment-update')
+const {UpdateSubscription} = require('./routes/payment/stripe-payment-update')
 const AuthRoutes = require('./routes/auth/index')
 
 
@@ -42,7 +46,7 @@ const AuthRoutes = require('./routes/auth/index')
 // app.use('/admin', AdminRoutes)
 // app.use('/team', TeamRoutes)
 // app.use('/quantization', QuantizationRoutes)
-// app.use('/setting', SettingRoutes)
+app.use('/order', OrderRoutes)
 
 app.use('/user', AuthRoutes)
 
@@ -51,6 +55,7 @@ app.use('/payment' , CreateSubscriptionSession)
 app.use('/payment' , CreateReportSession)
 app.use('/payment' , UpdateSubscription)
 app.use( SessionStatus)
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

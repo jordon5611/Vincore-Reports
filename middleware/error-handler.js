@@ -17,7 +17,7 @@ const errorhandler = (err, req, res, next) => {
     customError.status = 404;
     customError.err = `This id ${err.value} is not Found`
   }
-  //console.log(err)
+  console.log(err)
   return res.status(customError.status).json({ err: customError.err })
 }
 

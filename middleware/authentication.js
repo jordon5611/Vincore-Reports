@@ -1,11 +1,11 @@
-const { UnauthorizedError } = require('../errors');
+const { UnauthorizedError, NotFoundError } = require('../errors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 const Authentication = async (req, res, next)=>{
     const authHeader = req.headers.authorization
     if(!authHeader){
-        return res.status(404).json({err :'No Header is Provided'})
+        throw new NotFoundError('No Header is Provided')
     }
     const token = authHeader.split(' ')[1]
     try {
