@@ -40,7 +40,7 @@ router.get('/paypal/create-payment/:orderId', async (req, res) => {
             res.status(500).send('Error creating payment');
         } else {
             const approvalUrl = payment.links.find(link => link.rel === 'approval_url').href;
-            res.redirect(303, approvalUrl);
+            res.status(201).json({ status: 'success', url: approvalUrl });
         }
     });
 });
@@ -86,13 +86,13 @@ router.get('/paypal/success', async (req, res) => { // Success
             const paymentcreated = new Payment(paymentData);
             await paymentcreated.save();
 
-            res.status(200).send('Payment Successful!');
+            res.redirect(`https://vin-core.vercel.app?status=success`);
         }
     });
 });
 
 router.get('/paypal/cancel', (req, res) => { // Cancel
-    res.status(200).send('Payment Cancelled');
+    res.redirect(`https://vin-core.vercel.app?status=cancel`);
 });
 
 

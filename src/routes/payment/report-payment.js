@@ -36,7 +36,7 @@ CreateReportSession.get('/create-report-payment/:orderId', async (req, res) => {
 
     //console.log(session);
 
-    res.redirect(303, session.url);
+    res.status(201).json({ status: 'success', url: session.url });
 
 });
 
