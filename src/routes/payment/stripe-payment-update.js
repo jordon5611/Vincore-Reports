@@ -11,25 +11,25 @@ UpdateSubscription.get('/customers/:customer_id',Authentication, async (req, res
 
     //Check User
 
-    // const {userId} = req.user
+    const {userId} = req.user
 
-    // const user = await User.findById(userId)
+    const user = await User.findById(userId)
 
-    // if(!user){
-    //     throw new NotFoundError('User not found')
-    // }
+    if(!user){
+        throw new NotFoundError('User not found')
+    }
 
-    // if(user.subscription == false){
-    //     throw new BadRequestError('You have not subscribed to any plan')
-    // }
+    if(user.subscription == false){
+        throw new BadRequestError('You have not subscribed to any plan')
+    }
 
-    //const customerId = user.stripeCustomerId
+    const customerId = user.stripeCustomerId
 
-    const customer_id = req.params.customer_id
+    //const customer_id = req.params.customer_id
 
 
     const session = await stripe.billingPortal.sessions.create({
-        customer: customer_id,
+        customer: customerId,
         return_url: `${process.env.BASE_URL}/`,
     })
 
