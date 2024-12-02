@@ -2,6 +2,7 @@ const Order = require('../../models/Order');
 const { BadRequestError } = require("../../../errors")
 const vinValidator = require('vin-validator');
 const Authentication = require('../../../HelpingFunctions/authentication')
+const User = require('../../models/User');
 
 const createOrder = async (req, res, next) => {
 
@@ -24,6 +25,7 @@ const createOrder = async (req, res, next) => {
     }
 
     let userId;
+    let existingUser
 
     if (orderType == 'Subscription') {
 
@@ -35,18 +37,20 @@ const createOrder = async (req, res, next) => {
             throw new BadRequestError('User is not logged in, So you can not create subscription order')
         }
 
-        const existingUser = await User.findById(userId);
+        existingUser = await User.findById(userId);
 
         if (!existingUser) {
             throw new BadRequestError('User not found');
         }
 
-        if( existingUser.subscriptionEndDate > new Date() && paymentMethod == 'Subscription'){
+        if( existingUser.subscriptionEndDate > new Date()){
             if(existingUser.availableReports == 0){
                 throw new BadRequestError('You have reached your subscription report limit, Now you have to buy a new report')
             }
+            if(paymentMethod == 'PayPal' || paymentMethod == 'Stripe'){
+                throw new BadRequestError('You have already subcription and available report, So you can not buy new report')
+            }
             existingUser.availableReports = existingUser.availableReports - 1;
-            await existingUser.save();
         }
 
     }
@@ -71,6 +75,7 @@ const createOrder = async (req, res, next) => {
     }
 
     const savedOrder = await newOrder.save();
+    await existingUser.save();
 
     // Return the order details
     return res.status(201).json({

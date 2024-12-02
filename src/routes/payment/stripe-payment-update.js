@@ -19,11 +19,15 @@ UpdateSubscription.get('/customers',Authentication, async (req, res) => {
         throw new NotFoundError('User not found')
     }
 
-    if(user.subscription == false){
+    if(user.subscriptionEndDate < Date.now()){
         throw new BadRequestError('You have not subscribed to any plan')
     }
 
     const customerId = user.stripeCustomerId
+
+    if(!customerId){
+        throw new BadRequestError('You have not subscribed to any plan')
+    }
 
     //const customer_id = req.params.customer_id
 
