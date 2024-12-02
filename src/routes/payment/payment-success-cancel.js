@@ -39,8 +39,13 @@ SessionStatus.get('/success', async (req, res) => {
         if(user){
             user.subscription = true;
             user.stripeCustomerId = session.customer;
-            user.subscriptionStartDate = session.current_period_start;
-            user.subscriptionEndDate = session.current_period_end;
+            // Access subscription period start and end from the expanded subscription object
+            if (session.subscription && session.subscription.current_period_start && session.subscription.current_period_end) {
+                user.subscriptionStartDate = new Date(session.subscription.current_period_start * 1000); // Convert to JavaScript Date
+                user.subscriptionEndDate = new Date(session.subscription.current_period_end * 1000);   // Convert to JavaScript Date
+            } else {
+                //console.log("Subscription details are missing in the session.");
+            }
             await user.save();
         }
 

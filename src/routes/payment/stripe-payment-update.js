@@ -32,7 +32,7 @@ UpdateSubscription.get('/customers',Authentication, async (req, res) => {
         customer: customerId,
         return_url: `${process.env.BASE_URL}/`,
     })
-    
+
     res.status(200).json({status:'success', url: session.url});
 
 })
@@ -83,18 +83,26 @@ StripeWebhook.post('/webhook', express.raw({ type: 'application/json' }), async 
                 const user = await User.findOne({ stripeCustomerId: customerId });
 
                 if (user) {
+                  //  console.log("UnSubscribed");
                     user.subscription = false;
                     await user.save();
                 }
-                console.log('Subscription cancelled');
+                //console.log('Subscription cancelled');
             }else{
                 const customerId = subscription.customer;
                 const user = await User.findOne({ stripeCustomerId: customerId });
 
                 if (user) {
+                    //console.log("Subscribed");
                     user.subscription = true;
-                    user.subscriptionStartDate = session.current_period_start;
-                    user.subscriptionEndDate = session.current_period_end;
+                    // console.log("WEBHOOK => session.current_period_start => ",subscription.current_period_start)
+                    // console.log("WEBHOOK => session.current_period_end => ",subscription.current_period_end)
+                    if ( subscription.current_period_start && subscription.current_period_end) {
+                        user.subscriptionStartDate = new Date(subscription.current_period_start * 1000); // Convert to JavaScript Date
+                        user.subscriptionEndDate = new Date(subscription.current_period_end * 1000);   // Convert to JavaScript Date
+                    } else {
+                        //console.log("Subscription details are missing in the session.");
+                    }
                     await user.save();
                 }
             }

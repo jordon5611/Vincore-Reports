@@ -40,7 +40,7 @@ const OrderSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ['Stripe', 'PayPal'],
+        enum: ['Stripe', 'PayPal', 'Subsciption'],
         required: true,
     },
     paymentStatus: {

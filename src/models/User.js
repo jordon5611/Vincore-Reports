@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema(
     stripeCustomerId: {
       type: String,
     },
+    availableReports: {
+      type: Number,
+      default: 0
+    },
     city: {
       type: String,
     },
