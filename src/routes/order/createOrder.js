@@ -31,11 +31,24 @@ const createOrder = async (req, res, next) => {
 
         userId = user.userId
 
-        console.log(userId)
-
         if (!userId) {
             throw new BadRequestError('User is not logged in, So you can not create subscription order')
         }
+
+        const existingUser = await User.findById(userId);
+
+        if (!existingUser) {
+            throw new BadRequestError('User not found');
+        }
+
+        if( existingUser.subscriptionEndDate > new Date() && paymentMethod == 'Subscription'){
+            if(existingUser.availableReports == 0){
+                throw new BadRequestError('You have reached your subscription report limit, Now you have to buy a new report')
+            }
+            existingUser.availableReports = existingUser.availableReports - 1;
+            await existingUser.save();
+        }
+
     }
     // Create the order in the database
 

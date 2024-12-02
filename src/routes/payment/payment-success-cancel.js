@@ -39,6 +39,7 @@ SessionStatus.get('/success', async (req, res) => {
         if(user){
             user.subscription = true;
             user.stripeCustomerId = session.customer;
+            user.availableReports += 5;
             // Access subscription period start and end from the expanded subscription object
             if (session.subscription && session.subscription.current_period_start && session.subscription.current_period_end) {
                 user.subscriptionStartDate = new Date(session.subscription.current_period_start * 1000); // Convert to JavaScript Date
