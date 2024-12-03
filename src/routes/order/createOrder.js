@@ -24,6 +24,20 @@ const createOrder = async (req, res, next) => {
         throw new BadRequestError('Invalid VIN');
     }
 
+        // Create the order in the database
+    const newOrder = new Order({
+        vin,
+        licensePlateNumber,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        address,
+        paymentMethod,
+        orderType,
+        amount,
+    });
+
     let userId;
     let existingUser
 
@@ -51,24 +65,16 @@ const createOrder = async (req, res, next) => {
                 throw new BadRequestError('You have already subcription and available report, So you can not buy new report')
             }
             existingUser.availableReports = existingUser.availableReports - 1;
+
+            newOrder.paymentStatus = 'Completed'
+            
         }
 
     }
-    // Create the order in the database
 
 
-    const newOrder = new Order({
-        vin,
-        licensePlateNumber,
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        address,
-        paymentMethod,
-        orderType,
-        amount,
-    });
+
+ 
 
     if (userId) {
         newOrder.userId = userId

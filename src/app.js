@@ -32,7 +32,6 @@ app.use(express.json());
 // const AuthRoutes = require('./Routes/auth')
 // const TransactionRoutes = require('./Routes/transaction')
 // const AdminRoutes = require('./Routes/admin')
-// const TeamRoutes = require('./Routes/teams')
 const OrderRoutes = require('./routes/order/index')
 const PayPalRoutes = require('./routes/payment/paypal-payment')
 const CreateSubscriptionSession = require('./routes/payment/subscription-payment')
@@ -42,12 +41,16 @@ const SessionStatus = require('./routes/payment/payment-success-cancel')
 const {UpdateSubscription} = require('./routes/payment/stripe-payment-update')
 const AuthRoutes = require('./routes/auth/index')
 
+const ContactRoutes = require("./routes/contact/index")
+
 
 // app.use('/user', AuthRoutes)
 // app.use('/transaction', TransactionRoutes)
 // app.use('/admin', AdminRoutes)
 // app.use('/team', TeamRoutes)
 // app.use('/quantization', QuantizationRoutes)
+app.use('/contact', ContactRoutes)
+
 app.use('/order', OrderRoutes)
 
 app.use('/user', AuthRoutes)
