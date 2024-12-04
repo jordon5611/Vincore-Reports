@@ -34,7 +34,7 @@ UpdateSubscription.get('/customers',Authentication, async (req, res) => {
 
     const session = await stripe.billingPortal.sessions.create({
         customer: customerId,
-        return_url: `${process.env.BASE_URL}/`,
+        return_url: `https://vin-core.vercel.app?status=update`,
     })
 
     res.status(200).json({status:'success', url: session.url});
