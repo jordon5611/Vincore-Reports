@@ -24,7 +24,7 @@ const createOrder = async (req, res, next) => {
         throw new BadRequestError('Invalid VIN');
     }
 
-        // Create the order in the database
+    // Create the order in the database
     const newOrder = new Order({
         vin,
         licensePlateNumber,
@@ -39,7 +39,7 @@ const createOrder = async (req, res, next) => {
     });
 
     let userId;
-    let existingUser
+    let existingUser;
 
     if (orderType == 'Subscription') {
 
@@ -57,31 +57,34 @@ const createOrder = async (req, res, next) => {
             throw new BadRequestError('User not found');
         }
 
-        if( existingUser.subscriptionEndDate > new Date()){
-            if(existingUser.availableReports == 0){
+        if (existingUser.subscriptionEndDate > new Date()) {
+            if (existingUser.availableReports == 0) {
                 throw new BadRequestError('You have reached your subscription report limit, Now you have to buy a new report')
             }
-            if(paymentMethod == 'PayPal' || paymentMethod == 'Stripe'){
+            if (paymentMethod == 'PayPal' || paymentMethod == 'Stripe') {
                 throw new BadRequestError('You have already subcription and available report, So you can not buy new report')
             }
             existingUser.availableReports = existingUser.availableReports - 1;
 
             newOrder.paymentStatus = 'Completed'
-            
+
         }
 
     }
 
 
 
- 
+
 
     if (userId) {
         newOrder.userId = userId
     }
 
     const savedOrder = await newOrder.save();
-    await existingUser.save();
+
+    if (orderType == 'Subscription') {
+        await existingUser.save();
+    }
 
     // Return the order details
     return res.status(201).json({
