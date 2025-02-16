@@ -31,7 +31,7 @@ app.use(express.json());
 //Routers
 // const AuthRoutes = require('./Routes/auth')
 // const TransactionRoutes = require('./Routes/transaction')
-// const AdminRoutes = require('./Routes/admin')
+const AdminRoutes = require('./routes/admin')
 const OrderRoutes = require('./routes/order/index')
 const PayPalRoutes = require('./routes/payment/paypal-payment')
 const CreateSubscriptionSession = require('./routes/payment/subscription-payment')
@@ -46,7 +46,7 @@ const ContactRoutes = require("./routes/contact/index")
 
 // app.use('/user', AuthRoutes)
 // app.use('/transaction', TransactionRoutes)
-// app.use('/admin', AdminRoutes)
+app.use('/admin', AdminRoutes)
 // app.use('/team', TeamRoutes)
 // app.use('/quantization', QuantizationRoutes)
 app.use('/contact', ContactRoutes)
