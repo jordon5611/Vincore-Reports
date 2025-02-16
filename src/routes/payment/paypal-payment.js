@@ -4,6 +4,7 @@ const router = express.Router();
 const paypal = require('../../../paypal');
 const Payment = require('../../models/Payment');
 const Order = require('../../models/Order');
+const User = require('../../models/User');
 const { NotFoundError } = require("../../../errors")
 
 router.get('/paypal/create-payment/:orderId', async (req, res) => {
@@ -54,9 +55,9 @@ router.get('/paypal/success', async (req, res) => { // Success
         payer_id: PayerID,
     };
 
-    console.log(orderId);
-    console.log(paymentId);
-    console.log(PayerID);
+    // console.log(orderId);
+    // console.log(paymentId);
+    // console.log(PayerID);
 
     paypal.payment.execute(paymentId, execute_payment_json, async (error, payment) => {
         if (error) {
@@ -81,6 +82,19 @@ router.get('/paypal/success', async (req, res) => { // Success
             };
 
             order.paymentStatus = 'Completed';
+            if (order.orderType == 'Subscription') {
+                const user = await User.findById(order.userId);
+                if (user) {
+                    user.subscription = true;
+                    user.availableReports += 5;
+
+                    user.subscriptionStartDate = new Date(); // Current date
+                    user.subscriptionEndDate = new Date();
+                    user.subscriptionEndDate.setFullYear(user.subscriptionEndDate.getFullYear() + 1); // Adds 1 year
+
+                    await user.save();
+                }
+            }
             await order.save();
 
             const paymentcreated = new Payment(paymentData);
