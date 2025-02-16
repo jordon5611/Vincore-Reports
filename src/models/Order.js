@@ -57,6 +57,15 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    reportSendStatus: {
+        type: String,
+        enum: ['pending', 'sent'],
+        default: 'pending' 
+    },
+    pdfUrl: {
+        type: String
+    }
+
 }, {timestamps: true}
 );
 

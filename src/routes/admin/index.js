@@ -15,28 +15,18 @@ const router = express.Router()
 // const { getApprovedCashWithDrawal } = require('../Controller/admin/getApprovedCashWithDrawal')
 // const { getPendingCashDeposited } = require('../Controller/admin/getPendingCashDeposited')
 // const { getPendingCashWithDrawal } = require('../Controller/admin/getPendingCashWithDrawal')
-// const { approveCashDeposit } = require('../Controller/admin/approveCashDeposit')
-// const { approveCashWithDrawal } = require('../Controller/admin/approveCashWithDrawal')
-// const { getInformation } = require('../Controller/admin/getInformation')
-const { getAllUsers } = require('./getAllUsers')
-const { deleteUser } = require('./deleteUser')
-// const { deleteCashDeposit } = require('../Controller/admin/deleteCashDeposit')
-// const { deleteCashWithDrawal } = require('../Controller/admin/deleteCashWithDrawal')
-// const { updateWalletAddress } = require('../Controller/admin/updateWalletAddress')
-// const { updateUserBalance } = require('../Controller/admin/updateUserBalance')
-// const { updateImageSlider } = require('../Controller/admin/updateImageSlider')
-// const { getImageSlider } = require('../Controller/admin/getImageSlider')
-// const { deleteImageFromSlider } = require('../Controller/admin/deleteImageSlider')
-// const { updateAbout } = require('../Controller/admin/updateAbout')
-// const { deleteAbout } = require('../Controller/admin/deleteAbout')
-// const { getAbout } = require('../Controller/admin/getAbout')
-// const { updateUserLevel } = require('../Controller/admin/updateUserLevel')
-// const { getUserHistory} = require('../Controller/admin/getUserHistory')
-// const { getUserTeamContribution} = require('../Controller/admin/getUserTeamContribution')
+const { sendReport } = require('./sendReport')
+const { getOrdersByPaymentStatus } = require('./getOrdersByPaymentStatus')
+const { getOrdersByReportStatus } = require('./getOrdersByReportStatus')
+const { getAllUsers } = require('./getAllUsers');
+const { deleteUser } = require('./deleteUser');
+const { login } = require('./login');
 
 
-// router.get('/getAbout', Authentication ,getAbout)
-// router.get('/getInformation', Authentication, isAdmin ,getInformation)
+
+router.get('/getOrdersByPaymentStatus/:status', Authentication, getOrdersByPaymentStatus);
+router.get('/getOrdersByReportStatus/:status', Authentication, isAdmin, getOrdersByReportStatus);
+
 // router.get('/getApprovedCashDeposited', Authentication, isAdmin ,getApprovedCashDeposited)
 // router.get('/getPendingCashDeposited', Authentication, isAdmin ,getPendingCashDeposited)
 // router.patch('/approveCashDeposit/:id', Authentication,
@@ -47,6 +37,8 @@ const { deleteUser } = require('./deleteUser')
 // isAdmin , approveCashDeposit)
 
 router.get('/getAllUsers', Authentication, isAdmin, getAllUsers)
+
+router.post('/login', isAdmin, login);
 
 router.delete('/deleteUser/:userId', Authentication, [
     param('userId').not().notEmpty().isMongoId().withMessage('Invalid userId')
@@ -67,12 +59,12 @@ router.delete('/deleteUser/:userId', Authentication, [
 
 // router.get('/getImageSlider', Authentication ,getImageSlider)
 
-// router.patch('/approveCashWithDrawal/:id', Authentication,
-// [
-//     param('id').not().notEmpty().isMongoId().withMessage('Invalid cash withDrawal Id'),
-//     body('status').not().notEmpty().isString().withMessage('Invalid status')
-// ], validatorMiddleware,
-// isAdmin , approveCashWithDrawal)
+router.patch('/sendReport/:orderId', Authentication,
+[
+    param('orderId').not().notEmpty().isMongoId().withMessage('Invalid Order ID'),
+    body('pdfUrl').not().notEmpty().withMessage('Invalid PDF URL')
+], validatorMiddleware,
+isAdmin , sendReport)
 
 // router.delete('/deleteCashWithDrawal/:CashWithDrawalId', Authentication, [
 //     param('CashWithDrawalId').not().notEmpty().isMongoId().withMessage('Invalid Cash WithDrawal Id')

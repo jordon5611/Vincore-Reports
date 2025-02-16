@@ -1,34 +1,34 @@
 const nodemailer = require('nodemailer')
 
 function sendEmail(to, subject, text) {
-    return new Promise((resolve, reject) => {
-      
-      let transporter = nodemailer.createTransport({
-        service: 'gmail', 
-        auth: {
-          user: 'uhcstockstock@gmail.com', 
-          pass: process.env.EmailPassword, 
-        },
-      });
-  
+  return new Promise((resolve, reject) => {
 
-      let message = {
-        from: 'quickbuy418@gmail.com', 
-        to: to, 
-        subject: subject, 
-        text: text, 
-      };
-  
-      transporter.sendMail(message, (error, info) => {
-        if (error) {
-          console.error('Error sending email:', error);
-          reject(error);
-        } else {
-          console.log('Email sent: %s', info.messageId);
-          resolve(info);
-        }
-      });
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'uhcstockstock@gmail.com',
+        pass: process.env.EmailPassword,
+      },
     });
-  }
-  
-  module.exports = { sendEmail };
+
+
+    let message = {
+      from: 'quickbuy418@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+    };
+
+    transporter.sendMail(message, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        reject(error);
+      } else {
+        console.log('Email sent: %s', info.messageId);
+        resolve(info);
+      }
+    });
+  });
+}
+
+module.exports = { sendEmail };

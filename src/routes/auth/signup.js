@@ -3,9 +3,9 @@ const StatusCodes = require('http-status-codes')
 const User = require('../../models/User');
 
 const signup = async (req, res) => {
-    const { fname, lname, email, password,  userType} = req.body;
+    const { fname, lname, email, password,  role} = req.body;
 
-    const newUser = new User({ fname, lname, email, password, userType })
+    const newUser = new User({ fname, lname, email, password, role});
 
     const token = newUser.createToken()
 
