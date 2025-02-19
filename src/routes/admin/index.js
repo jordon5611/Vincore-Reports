@@ -21,9 +21,10 @@ const { getOrdersByReportStatus } = require('./getOrdersByReportStatus')
 const { getAllUsers } = require('./getAllUsers');
 const { deleteUser } = require('./deleteUser');
 const { login } = require('./login');
+const { getAllOrders } = require('./getAllOrders');
 
 
-
+router.get('/getAllOrders', Authentication, getAllOrders);
 router.get('/getOrdersByPaymentStatus/:status', Authentication, getOrdersByPaymentStatus);
 router.get('/getOrdersByReportStatus/:status', Authentication, isAdmin, getOrdersByReportStatus);
 
