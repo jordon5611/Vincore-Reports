@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+require('dotenv').config();
 
 function sendEmail(to, subject, text) {
   return new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ function sendEmail(to, subject, text) {
 
 
     let message = {
-      from: 'quickbuy418@gmail.com',
+      from: process.env.EMAILFORMAIL,
       to: to,
       subject: subject,
       text: text,
