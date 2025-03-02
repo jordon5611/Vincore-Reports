@@ -25,6 +25,6 @@ router.post('/createOrder',
 
 router.get('/get-order/:orderId', Authentication ,getOrder)
 
-router.get('/getOrdersOfUser', Authentication, getOrdersOfUser)
+router.get('/getOrdersOfUser/:userId', Authentication, getOrdersOfUser)
 
 module.exports = router
