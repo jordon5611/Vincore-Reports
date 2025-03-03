@@ -7,7 +7,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001"],
+  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001", "https://www.vincorereports.com/", "https://vincorereports.com/", "https://www.vincorereports.com", "https://vincorereports.com"],
   optionsSuccessStatus: 200,
 };
 
