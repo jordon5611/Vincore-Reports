@@ -7,7 +7,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001", "https://www.vincorereports.com/", "https://vincorereports.com/", "https://www.vincorereports.com", "https://vincorereports.com"],
+  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001", "https://www.vincorereports.com/", "https://vincorereports.com/", "https://www.vincorereports.com", "https://vincorereports.com", "https://statuesque-salamander-8b733c.netlify.app/", "https://statuesque-salamander-8b733c.netlify.app"],
   optionsSuccessStatus: 200,
 };
 
@@ -18,8 +18,8 @@ app.options('*', cors(corsOptions));
 // app.use(bodyParser.json({ limit: '25mb' }));
 
 // Place webhook route before JSON middleware
-const {StripeWebhook} = require('./routes/payment/stripe-payment-update');
-app.use( StripeWebhook);
+const { StripeWebhook } = require('./routes/payment/stripe-payment-update');
+app.use(StripeWebhook);
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +38,7 @@ const CreateSubscriptionSession = require('./routes/payment/subscription-payment
 const CreateReportSession = require('./routes/payment/report-payment')
 
 const SessionStatus = require('./routes/payment/payment-success-cancel')
-const {UpdateSubscription} = require('./routes/payment/stripe-payment-update')
+const { UpdateSubscription } = require('./routes/payment/stripe-payment-update')
 const AuthRoutes = require('./routes/auth/index')
 
 const ContactRoutes = require("./routes/contact/index")
@@ -55,15 +55,15 @@ app.use('/order', OrderRoutes)
 
 app.use('/user', AuthRoutes)
 
-app.use('/payment' , PayPalRoutes)
-app.use('/payment' , CreateSubscriptionSession)
-app.use('/payment' , CreateReportSession)
-app.use('/payment' , UpdateSubscription)
-app.use( SessionStatus)
+app.use('/payment', PayPalRoutes)
+app.use('/payment', CreateSubscriptionSession)
+app.use('/payment', CreateReportSession)
+app.use('/payment', UpdateSubscription)
+app.use(SessionStatus)
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+  res.send('Hello World!')
 })
 
 
