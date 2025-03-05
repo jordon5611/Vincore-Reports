@@ -7,7 +7,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001", "https://www.vincorereports.com/", "https://vincorereports.com/", "https://www.vincorereports.com", "https://vincorereports.com", "https://statuesque-salamander-8b733c.netlify.app/", "https://statuesque-salamander-8b733c.netlify.app"],
+  origin: ["https://vin-core.vercel.app", "http://localhost:3000", "http://localhost:3001", "https://www.vincorereports.com/", "https://vincorereports.com/", "https://www.vincorereports.com", "https://vincorereports.com", "https://statuesque-salamander-8b733c.netlify.app/", "https://statuesque-salamander-8b733c.netlify.app", "https://gentle-croissant-7688ee.netlify.app/", "https://gentle-croissant-7688ee.netlify.app"],
   optionsSuccessStatus: 200,
 };
 
